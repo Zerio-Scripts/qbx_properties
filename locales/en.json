@@ -53,7 +53,8 @@
         "exit": "[E] - Exit | [G] - Manage",
         "clothing": "[E] - Clothing | [G] - Outfits",
         "logout": "[E] - Logout",
-        "view_property": "[E] - View Property"
+        "view_property": "[E] - View Property",
+        "garage": "[E] - Open Garage | [G] - Store Vehicle"
     },
     "logs": {
         "create_property": "Attempting to create a property.",

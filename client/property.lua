@@ -442,6 +442,29 @@ CreateThread(function()
     end
 end)
 
+local garagePoints = {}
+
+CreateThread(function()
+    garagePoints = lib.callback.await('qbx_properties:callback:loadGarages')
+    while true do
+        local sleep = 800
+        local playerCoords = GetEntityCoords(cache.ped)
+        for i = 1, #garagePoints do
+            if #(playerCoords - garagePoints[i].coords) < 3.0 then
+                sleep = 0
+                qbx.drawText3d({ coords = garagePoints[i].coords, text = locale('drawtext.garage') })
+                if IsControlJustPressed(0, 38) then
+                    TriggerServerEvent('qbx_properties:server:openGarage', garagePoints[i].id)
+                end
+                if IsControlJustPressed(0, 47) then
+                    TriggerServerEvent('qbx_properties:server:storeVehicle', garagePoints[i].id)
+                end
+            end
+        end
+        Wait(sleep)
+    end
+end)
+
 RegisterNetEvent('qbx_properties:client:concealPlayers', function(playerIds)
     local players = GetActivePlayers()
     for i = 1, #players do NetworkConcealPlayer(players[i], false, false) end
